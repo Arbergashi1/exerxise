@@ -1,0 +1,23 @@
+
+
+.ag-theme-alpine .ag-icon-tree-open, .ag-theme-alpine .ag-icon-tree-closed {
+  background-image: none;
+}
+
+.ag-row-drag {
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  opacity: 0.8;
+  z-index: 10000;
+}
+
+.ag-row-drag .ag-row-drag-icon {
+  font-size: 1.5rem;
+  margin-right: 5px;
+}
+
+.ag-theme-alpine .ag-row-dragging {
+  opacity: 0.4;
+}
+
