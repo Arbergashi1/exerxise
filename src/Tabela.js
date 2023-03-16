@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import "./App.css";
 import "ag-grid-enterprise";
+import Button from "./Button";
 
 const columnDefs = [
   {
@@ -23,14 +25,15 @@ const columnDefs = [
     headerName: "Options",
     field: "options",
     cellClass: "table-cell",
-    cellRenderer: "deleteButtonRenderer",
+    cellRendererFramework: (props) => <Button data={props.data} onSave={(newData) => console.log(newData)} />,
   },
+  
 ];
 
 const rowGroupPanelShow = "always";
 
 const rowData = [
-  { make: "Toyota", model: "Corolla", price: "$22,000", options: "delete" },
+  { id:'1',make: "Toyota", model: "Corolla", price: "$22,000"},
   { make: "Honda", model: "Civic", price: "$24,000" },
   { make: "Ford", model: "Mustang", price: "$32,000" },
   { make: "Toyota", model: "Corolla", price: "$22,000" },
@@ -52,32 +55,13 @@ const rowData = [
   { make: "Toyota", model: "Corolla", price: "$22,000" },
 ];
 
-const DeleteButtonRenderer = (props) => {
-    const handleClick = () => {
-      // Implement your delete logic here
-      console.log("Delete clicked", props.node.data);
-    };
-  
-    return (
-      <button
-        onClick={handleClick}
-        style={{
-          backgroundColor: "red",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        Delete
-      </button>
-    );
-  };
 
 
 
 console.log(rowData);
+
 const Tabela = () => {
+  
   const [filteredRows, setFilteredRows] = useState([]);
   const [pagination, setPagination] = useState({ currentPage: 1, pageSize: 5 });
   const firstRow = (pagination.currentPage - 1) * pagination.pageSize;
@@ -108,12 +92,10 @@ const Tabela = () => {
     setFilteredRows(filteredData);
   };
 
-  
-  
-
   const rowsToDisplay = filteredRows.length > 0 ? filteredRows : rowData;
   return (
     <>
+     
       <div style={{ margin: "1rem" }}>
         <input
           onChange={handleSearch}
@@ -139,7 +121,7 @@ const Tabela = () => {
           paginationPageSize={pagination.pageSize}
           suppressPaginationPanel={false}
           frameworkComponents={{
-            deleteButtonRenderer: DeleteButtonRenderer,
+            buttonRenderer: Button,
           }}
         />
       </div>
